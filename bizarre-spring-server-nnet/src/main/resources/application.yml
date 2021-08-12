@@ -1,0 +1,23 @@
+server:
+  port: 8084
+  
+camel:
+  springboot:
+    name: ServicesRest_BizarreNnet
+    
+management:
+  port: 8081
+  
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+    
+quickstart:
+  generateOrderPeriod: 10s
+  processOrderPeriod: 30s
+
+bizarre:
+  api:
+    path: '/bizarre/nnet'
+    serverPort: '8084'
