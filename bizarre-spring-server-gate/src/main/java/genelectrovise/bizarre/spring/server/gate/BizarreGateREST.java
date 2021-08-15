@@ -1,52 +1,66 @@
 package genelectrovise.bizarre.spring.server.gate;
 
+import java.util.List;
+
+import javax.servlet.Servlet;
+
 /**
  * https://www.baeldung.com/apache-camel-spring-boot
  */
 import org.apache.camel.CamelContext;
+import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BizarreGateREST extends RouteBuilder {
 
-	/**
-	 * The root path for the API, i.e. localhost://path
-	 */
-	@Value("${bizarre.api.path}")
-	String camelRootContextPath;
-
-	/**
-	 * The port for the Camel servlet
-	 */
-	@Value("${bizarre.api.serverPort}")
-	String serverPort;
+	@Bean
+	public ServletRegistrationBean<Servlet> servletRegistrationBean() {
+		ServletRegistrationBean<Servlet> registration = new ServletRegistrationBean<>(new CamelHttpTransportServlet(),
+				"/camel/*");
+		registration.setName("CamelServlet");
+		return registration;
+	}
 
 	@Override
 	public void configure() throws Exception {
 		CamelContext context = new DefaultCamelContext();
 
-		//
-		restConfiguration() //
-				.contextPath(camelRootContextPath) //
-				.port(serverPort) //
-				.enableCORS(true) //
-				.apiContextPath("/api-doc") //
-				.apiProperty("api.title", "Bizarre REST API") //
-				.apiProperty("api.version", "v1") //
-				.apiContextRouteId("doc-api") //
-				.component("servlet") //
-				.bindingMode(RestBindingMode.json) // Allows interfacing with the API through JSON
+		restConfiguration() // Configure all REST services
+				.component("servlet") // We are using the default Camel servlet to collect messages
+				.host("localhost") // The servlet will listen on localhost
+				.port(8082) // The servlet will listen on this port
+				.bindingMode(RestBindingMode.json) // NOTE: Basic browser requests can break Mode.json - We expect to receive JSON but auto for the moment
 		;
 
-		// Create REST end-points ON THIS NODE
-		rest("") //
-				.id("") //
-				.post();
+		rest() // REST with no prefix
+				.get("/hello-world") // On getting hello-world
+				.produces(MediaType.APPLICATION_JSON_VALUE) // Produces a JSON
+				.route() // Start a new route
+				.setBody(constant("Welcome to Bizarre")) // Set the response body
 		;
 
-		from("");
+		from("timer:bizarre-timer?period=10000") // Make a timer
+				.process(exchange -> {
+					List<Route> routes = exchange.getContext().getRoutes();
+
+					StringBuilder builder = new StringBuilder("Routes = ");
+					routes.forEach((route) -> {
+						builder.append("(" + route.getRouteId() + ":in=" + route.getEndpoint() + ")");
+					});
+
+					exchange.getIn().setBody(builder.toString());
+				}) //
+				.to("log:bizarre-logger") // Log
+		;
+
 	}
 
 }

@@ -43,6 +43,21 @@
 			<artifactId>camel-spring-boot-starter</artifactId>
 			<version>3.11.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-http</artifactId>
+			<version>3.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-servlet</artifactId>
+			<version>3.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+			<version>3.11.1</version>
+		</dependency>
 
 		<!-- Spring DevTools -->
 		<dependency>
