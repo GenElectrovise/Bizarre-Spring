@@ -40,8 +40,8 @@ public class BizarreGateREST extends RouteBuilder {
 				.bindingMode(RestBindingMode.json) // We expect to receive JSON 
 		;
 
-		rest() // REST with no prefix
-				.get("/hello-world") // On getting hello-world
+		rest("/gate") // REST with no prefix
+				.get("/welcome") // On getting hello-world
 				.produces(MediaType.APPLICATION_JSON_VALUE) // Produces a JSON
 				.route() // Start a new route
 				.setBody(constant("Welcome to Bizarre")) // Set the response body
