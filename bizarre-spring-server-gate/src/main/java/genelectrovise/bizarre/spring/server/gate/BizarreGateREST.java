@@ -37,7 +37,7 @@ public class BizarreGateREST extends RouteBuilder {
 				.component("servlet") // We are using the default Camel servlet to collect messages
 				.host("localhost") // The servlet will listen on localhost
 				.port(8082) // The servlet will listen on this port
-				.bindingMode(RestBindingMode.json) // NOTE: Basic browser requests can break Mode.json - We expect to receive JSON but auto for the moment
+				.bindingMode(RestBindingMode.json) // We expect to receive JSON 
 		;
 
 		rest() // REST with no prefix
