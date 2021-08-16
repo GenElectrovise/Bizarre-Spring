@@ -1,5 +1,7 @@
 package genelectrovise.bizarre.spring.server.gate;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -10,13 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.GsonBuilder;
 
-import genelectrovise.bizarre.spring.api.impl.RegisterServiceRequestImpl;
 import genelectrovise.bizarre.spring.api.inter.BizarreService;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
+import genelectrovise.bizarre.spring.api.inter.ServiceType;
 
 @Service
 public class GateMicroservice {
@@ -28,31 +29,56 @@ public class GateMicroservice {
 
 	@PostConstruct
 	public void findCmdService() {
-		try {
 
-			// Configure headers
-			RestTemplate template = new RestTemplate();
-			HttpHeaders headers = new HttpHeaders();
+		// Configure headers
+		RestTemplate template = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
 
-			// Configure content
-			RegisterServiceRequest registerServiceRequest = new RegisterServiceRequestImpl(() -> "gate", "localhost", 8082);			
-			HttpEntity<RegisterServiceRequest> httpRequestEntity = new HttpEntity<>(registerServiceRequest, null);
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			
-			String url = cmdAddress + "/register";
-			String json = new ObjectMapper().writeValueAsString(httpRequestEntity);
+		// Configure content
+		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequestImpl(() -> "gate", "localhost", 8082);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+		HttpEntity<RegisterServiceRequest> httpRequestEntity = new HttpEntity<>(registerServiceRequest, headers);
 
-			// Log request
-			LOGGER.info("POSTing " + json + " -to- " + url);
+		String url = cmdAddress + "/register";
+		String json = new GsonBuilder().create().toJson(httpRequestEntity);
 
-			// POST
-			ResponseEntity<RegisterServiceResponse> httpResponseEntity = template.postForEntity(url, json, RegisterServiceResponse.class);
+		// Log request
+		LOGGER.info("POSTing " + httpRequestEntity + " -to- " + url);
 
-			// Log the response
-			LOGGER.info("Recieved response: " + httpResponseEntity.toString());
+		// POST
+		ResponseEntity<RegisterServiceResponse> httpResponseEntity = template.postForEntity(url, httpRequestEntity, RegisterServiceResponse.class);
 
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		// Log the response
+		LOGGER.info("Recieved response: " + httpResponseEntity.toString());
+
+	}
+
+	public static class RegisterServiceRequestImpl implements RegisterServiceRequest {
+
+		ServiceType serviceType;
+		String serviceHost;
+		int servicePort;
+
+		public RegisterServiceRequestImpl(ServiceType serviceType, String serviceHost, int servicePort) {
+			this.serviceType = serviceType;
+			this.serviceHost = serviceHost;
+			this.servicePort = servicePort;
+		}
+
+		@Override
+		public ServiceType getServiceType() {
+			return serviceType;
+		}
+
+		@Override
+		public String getServiceHost() {
+			return serviceHost;
+		}
+
+		@Override
+		public int getServicePort() {
+			return servicePort;
 		}
 	}
 }

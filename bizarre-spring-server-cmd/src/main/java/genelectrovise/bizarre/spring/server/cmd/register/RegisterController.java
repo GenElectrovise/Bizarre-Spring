@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import genelectrovise.bizarre.spring.api.impl.RegisterServiceResponseImpl;
 import genelectrovise.bizarre.spring.api.inter.GetRegisteredServicesResponse;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
@@ -38,7 +37,7 @@ public class RegisterController {
 	}
 
 	@PostMapping("/register")
-	ResponseEntity <RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest request) {
+	ResponseEntity<RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest request) {
 
 		ResponseEntity<RegisterServiceResponse> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -52,9 +51,23 @@ public class RegisterController {
 			throw new InvalidRegistrationPacketException("Service Type is null. ", "type", request.getServicePort());
 
 		response = ResponseEntity.status(HttpStatus.ACCEPTED).body(new RegisterServiceResponseImpl(42));
-		
+
 		LOGGER.info("Sending response: " + response);
-		
+
 		return response;
+	}
+
+	public static class RegisterServiceResponseImpl implements RegisterServiceResponse {
+		
+		int ok;
+
+		public RegisterServiceResponseImpl(int ok) {
+			this.ok = ok;
+		}
+
+		@Override
+		public int ok() {
+			return ok;
+		}
 	}
 }
