@@ -6,11 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import genelectrovise.bizarre.spring.api.impl.RegisterServiceResponseImpl;
 import genelectrovise.bizarre.spring.api.inter.GetRegisteredServicesResponse;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
@@ -18,7 +21,7 @@ import genelectrovise.bizarre.spring.server.cmd.CmdMicroservice;
 
 @RestController
 public class RegisterController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
 
 	@Autowired
@@ -35,8 +38,10 @@ public class RegisterController {
 	}
 
 	@PostMapping("/register")
-	RegisterServiceResponse registerService(@RequestBody RegisterServiceRequest request) {
-		
+	ResponseEntity <RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest request) {
+
+		ResponseEntity<RegisterServiceResponse> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 		LOGGER.info("Recieved registration POST with RegisterServiceRequest " + request.toString());
 
 		if (request.getServiceHost() == null)
@@ -46,12 +51,10 @@ public class RegisterController {
 		if (request.getServiceType() == null)
 			throw new InvalidRegistrationPacketException("Service Type is null. ", "type", request.getServicePort());
 
-		return new RegisterServiceResponse() {
-			
-			@Override
-			public int ok() {
-				return 42;
-			}
-		};
+		response = ResponseEntity.status(HttpStatus.ACCEPTED).body(new RegisterServiceResponseImpl(42));
+		
+		LOGGER.info("Sending response: " + response);
+		
+		return response;
 	}
 }

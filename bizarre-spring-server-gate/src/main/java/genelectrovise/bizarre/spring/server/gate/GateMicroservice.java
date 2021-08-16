@@ -28,28 +28,31 @@ public class GateMicroservice {
 
 	@PostConstruct
 	public void findCmdService() {
-
-		//
-		RestTemplate template = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-
-		// Configure content
-		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequestImpl(() -> "gate", "localhost", 8082);
-		HttpEntity<RegisterServiceRequest> httpRequestEntity = new HttpEntity<>(registerServiceRequest, null);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url = cmdAddress + "/register";
-
-		// Log content
 		try {
-			LOGGER.info("POSTing " + new ObjectMapper().writeValueAsString(registerServiceRequest) + " -to- " + url);
+
+			// Configure headers
+			RestTemplate template = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+
+			// Configure content
+			RegisterServiceRequest registerServiceRequest = new RegisterServiceRequestImpl(() -> "gate", "localhost", 8082);			
+			HttpEntity<RegisterServiceRequest> httpRequestEntity = new HttpEntity<>(registerServiceRequest, null);
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			String url = cmdAddress + "/register";
+			String json = new ObjectMapper().writeValueAsString(httpRequestEntity);
+
+			// Log request
+			LOGGER.info("POSTing " + json + " -to- " + url);
+
+			// POST
+			ResponseEntity<RegisterServiceResponse> httpResponseEntity = template.postForEntity(url, json, RegisterServiceResponse.class);
+
+			// Log the response
+			LOGGER.info("Recieved response: " + httpResponseEntity.toString());
+
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-
-		// POST
-		ResponseEntity<RegisterServiceResponse> httpResponseEntity = template.postForEntity(url, registerServiceRequest, RegisterServiceResponse.class);
-
-		// Log the response (should be 42)
-		LOGGER.info("Recieved response token: " + httpResponseEntity.getBody().ok() + "");
 	}
 }

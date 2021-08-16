@@ -22,4 +22,9 @@ public class RegisterServiceResponseImpl implements RegisterServiceResponse {
 	public void setOk(int ok) {
 		this.ok = ok;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("RegisterServiceResponseImpl{" + ok + "}");
+	}
 }
