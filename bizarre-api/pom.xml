@@ -1,8 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<properties>
+		<java.version>8</java.version>
+	</properties>
+
+	<groupId>genelectrovise.bizarre</groupId>
+	<artifactId>spring.api</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<repositories>
 		<repository>
@@ -18,25 +25,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>genelectrovise.bizarre</groupId>
-	<artifactId>bizarre-spring-server-cmd</artifactId>
-	<version>1.0</version>
-	<name>bizarre-spring-server</name>
-	<description>Server for the Spring-Based version of Bizarre.</description>
-
-	<properties>
-		<java.version>8</java.version>
-		<dl4j.version>0.9.1</dl4j.version>
-	</properties>
-
 	<dependencies>
-
-		<!-- Bizarre API -->
-		<dependency>
-			<groupId>genelectrovise.bizarre</groupId>
-			<artifactId>spring.api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 
 		<!-- Spring Web -->
 		<dependency>
@@ -69,5 +58,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
