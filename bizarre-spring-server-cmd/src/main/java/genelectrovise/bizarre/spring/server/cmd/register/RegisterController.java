@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import genelectrovise.bizarre.spring.api.inter.GetRegisteredServicesResponse;
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 import genelectrovise.bizarre.spring.server.cmd.CmdMicroservice;
 
 @RestController
@@ -40,15 +40,14 @@ public class RegisterController {
 	ResponseEntity<RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest request) {
 
 		ResponseEntity<RegisterServiceResponse> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		
 
-		LOGGER.info("Recieved registration POST with RegisterServiceRequest " + request.toString());
-
-		if (request.getServiceHost() == null)
-			throw new InvalidRegistrationPacketException("Host is null. ", "host", request.getServiceHost());
-		if (request.getServicePort() == 0)
-			throw new InvalidRegistrationPacketException("Port is 0. ", "port", request.getServicePort());
-		if (request.getServiceType() == null)
-			throw new InvalidRegistrationPacketException("Service Type is null. ", "type", request.getServicePort());
+		if (request.getHost() == null)
+			throw new InvalidRegistrationPacketException("Host is null. ", "host", request.getHost());
+		if (request.getPort() == 0)
+			throw new InvalidRegistrationPacketException("Port is 0. ", "port", request.getPort());
+		if (request.getType() == null)
+			throw new InvalidRegistrationPacketException("Service Type is null. ", "type", request.getPort());
 
 		response = ResponseEntity.status(HttpStatus.ACCEPTED).body(new RegisterServiceResponseImpl(42));
 
@@ -58,7 +57,7 @@ public class RegisterController {
 	}
 
 	public static class RegisterServiceResponseImpl implements RegisterServiceResponse {
-		
+
 		int ok;
 
 		public RegisterServiceResponseImpl(int ok) {

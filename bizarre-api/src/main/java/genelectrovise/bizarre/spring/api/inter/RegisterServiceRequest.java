@@ -11,69 +11,87 @@ import com.google.gson.stream.JsonWriter;
 
 public interface RegisterServiceRequest {
 
-	ServiceType getServiceType();
+	public static final String TYPE_KEY = "type";
 
-	String getServiceHost();
+	String getType();
 
-	int getServicePort();
+	public static final String HOST_KEY = "host";
+
+	String getHost();
+
+	public static final String PORT_KEY = "port";
+
+	int getPort();
 
 	@Override
 	String toString();
-	
-	@JsonAdapter(value = RegisterServiceRequest.class)
+
 	public static class Adapter extends TypeAdapter<RegisterServiceRequest> {
 
 		@Override
 		public void write(JsonWriter writer, RegisterServiceRequest request) throws IOException {
 			writer.beginObject();
-			writer.name("serviceType").value(request.getServiceType().getName());
-			writer.name("serviceHost").value(request.getServiceHost());
-			writer.name("servicePort").value(request.getServicePort());
+			writer.name(TYPE_KEY).value(request.getType());
+			writer.name(HOST_KEY).value(request.getHost());
+			writer.name(PORT_KEY).value(request.getPort());
 			writer.endObject();
 		}
 
 		@Override
 		public RegisterServiceRequest read(JsonReader reader) throws IOException {
 
-			ServiceType getServiceType;
-			String getServiceHost;
-			int getServicePort;
+			String type;
+			String host;
+			int port;
 
 			JsonObject object = new Gson().fromJson(reader, JsonObject.class);
 
-			// Service type
-			String name = object.get("serviceType").getAsString();
-			getServiceType = new ServiceType() {
-				@Override
-				public String getName() {
-					return name;
-				}
-			};
-
-			// Service host
-			getServiceHost = object.get("serviceHost").getAsString();
-
-			// Service port
-			getServicePort = object.get("servicePort").getAsInt();
+			// Get values
+			type = object.get(TYPE_KEY).getAsString();
+			host = object.get(HOST_KEY).getAsString();
+			port = object.get(PORT_KEY).getAsInt();
 
 			// Return
-			return new RegisterServiceRequest() {
+			return new RegisterServiceRequest.Concrete(type, host, port);
+		}
 
-				@Override
-				public ServiceType getServiceType() {
-					return getServiceType;
-				}
+		@Override
+		public String toString() {
+			return getClass().getSimpleName() + "{" + "no fields" + "}";
+		}
 
-				@Override
-				public int getServicePort() {
-					return getServicePort;
-				}
+	}
 
-				@Override
-				public String getServiceHost() {
-					return getServiceHost;
-				}
-			};
+	public static class Concrete implements RegisterServiceRequest {
+
+		String type;
+		String host;
+		int port;
+
+		public Concrete(String type, String host, int port) {
+			this.type = type;
+			this.host = host;
+			this.port = port;
+		}
+
+		@Override
+		public String getType() {
+			return type;
+		}
+
+		@Override
+		public String getHost() {
+			return host;
+		}
+
+		@Override
+		public int getPort() {
+			return port;
+		}
+
+		@Override
+		public String toString() {
+			return getClass().getSimpleName() + "{" + "type=" + type + " host=" + host + " port=" + port + "}";
 		}
 
 	}

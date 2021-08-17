@@ -14,10 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.GsonBuilder;
 
-import genelectrovise.bizarre.spring.api.inter.BizarreService;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
-import genelectrovise.bizarre.spring.api.inter.ServiceType;
 
 @Service
 public class GateMicroservice {
@@ -25,7 +22,6 @@ public class GateMicroservice {
 	private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(GateMicroservice.class);
 
 	private String cmdAddress = "http://localhost:8081";
-	private BizarreService cmdService;
 
 	@PostConstruct
 	public void findCmdService() {
@@ -35,50 +31,25 @@ public class GateMicroservice {
 		HttpHeaders headers = new HttpHeaders();
 
 		// Configure content
-		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequestImpl(() -> "gate", "localhost", 8082);
+		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequest.Concrete("gate", "localhost", 8082);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-		HttpEntity<RegisterServiceRequest> httpRequestEntity = new HttpEntity<>(registerServiceRequest, headers);
+		String json = new GsonBuilder().create().toJson(registerServiceRequest);
 
+		// Package into request
+		HttpEntity<String> httpRequestEntity = new HttpEntity<>(json, headers);
+
+		// Get destination
 		String url = cmdAddress + "/register";
-		String json = new GsonBuilder().create().toJson(httpRequestEntity);
 
 		// Log request
-		LOGGER.info("POSTing " + httpRequestEntity + " -to- " + url);
+		LOGGER.info("POSTing " + new GsonBuilder().create().toJson(httpRequestEntity) + " -to- " + url);
 
 		// POST
-		ResponseEntity<RegisterServiceResponse> httpResponseEntity = template.postForEntity(url, httpRequestEntity, RegisterServiceResponse.class);
+		ResponseEntity<String> httpResponseEntity = template.postForEntity(url, httpRequestEntity, String.class);
 
 		// Log the response
 		LOGGER.info("Recieved response: " + httpResponseEntity.toString());
 
-	}
-
-	public static class RegisterServiceRequestImpl implements RegisterServiceRequest {
-
-		ServiceType serviceType;
-		String serviceHost;
-		int servicePort;
-
-		public RegisterServiceRequestImpl(ServiceType serviceType, String serviceHost, int servicePort) {
-			this.serviceType = serviceType;
-			this.serviceHost = serviceHost;
-			this.servicePort = servicePort;
-		}
-
-		@Override
-		public ServiceType getServiceType() {
-			return serviceType;
-		}
-
-		@Override
-		public String getServiceHost() {
-			return serviceHost;
-		}
-
-		@Override
-		public int getServicePort() {
-			return servicePort;
-		}
 	}
 }
