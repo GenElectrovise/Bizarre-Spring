@@ -1,11 +1,12 @@
 package genelectrovise.bizarre.spring.api.inter;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
+import com.google.gson.InstanceCreator;
 import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -39,17 +40,16 @@ public interface RegisterServiceRequest {
 
 		@Override
 		public RegisterServiceRequest read(JsonReader reader) throws IOException {
-
-			String type;
-			String host;
-			int port;
-
 			JsonObject object = new Gson().fromJson(reader, JsonObject.class);
+			return readJsonObject(object);
+		}
+
+		public RegisterServiceRequest readJsonObject(JsonObject object) {
 
 			// Get values
-			type = object.get(TYPE_KEY).getAsString();
-			host = object.get(HOST_KEY).getAsString();
-			port = object.get(PORT_KEY).getAsInt();
+			String type = object.get(TYPE_KEY).getAsString();
+			String host = object.get(HOST_KEY).getAsString();
+			int port = object.get(PORT_KEY).getAsInt();
 
 			// Return
 			return new RegisterServiceRequest.Concrete(type, host, port);

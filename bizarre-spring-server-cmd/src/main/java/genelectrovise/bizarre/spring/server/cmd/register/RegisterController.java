@@ -37,11 +37,10 @@ public class RegisterController {
 	}
 
 	@PostMapping("/register")
-	ResponseEntity<RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest request) {
+	ResponseEntity<RegisterServiceResponse> registerService(@RequestBody RegisterServiceRequest.Concrete request) {
 
 		ResponseEntity<RegisterServiceResponse> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		
-
 		if (request.getHost() == null)
 			throw new InvalidRegistrationPacketException("Host is null. ", "host", request.getHost());
 		if (request.getPort() == 0)
@@ -49,24 +48,11 @@ public class RegisterController {
 		if (request.getType() == null)
 			throw new InvalidRegistrationPacketException("Service Type is null. ", "type", request.getPort());
 
-		response = ResponseEntity.status(HttpStatus.ACCEPTED).body(new RegisterServiceResponseImpl(42));
+		response = ResponseEntity.status(HttpStatus.ACCEPTED).body(new RegisterServiceResponse.Concrete(42));
 
 		LOGGER.info("Sending response: " + response);
 
 		return response;
 	}
 
-	public static class RegisterServiceResponseImpl implements RegisterServiceResponse {
-
-		int ok;
-
-		public RegisterServiceResponseImpl(int ok) {
-			this.ok = ok;
-		}
-
-		@Override
-		public int ok() {
-			return ok;
-		}
-	}
 }
