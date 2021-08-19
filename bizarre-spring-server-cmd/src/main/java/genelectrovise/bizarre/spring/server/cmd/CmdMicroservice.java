@@ -1,7 +1,5 @@
 package genelectrovise.bizarre.spring.server.cmd;
 
-import java.util.Map;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -14,6 +12,7 @@ import com.google.gson.Gson;
 
 import genelectrovise.bizarre.spring.api.inter.BizarreService;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegister;
 
 @Service
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -21,15 +20,14 @@ public class CmdMicroservice implements BizarreService {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CmdMicroservice.class);
 
-	// Name : address
-	private Map<String, String> services;
+	private ServiceRegister serviceRegister;
 
-	public CmdMicroservice(Map<String, String> services) {
-		this.services = services;
+	public CmdMicroservice(ServiceRegister serviceRegister) {
+		this.serviceRegister = serviceRegister;
 	}
 
-	public Map<String, String> getServices() {
-		return services;
+	public ServiceRegister getServiceRegister() {
+		return serviceRegister;
 	}
 
 	@PostConstruct
