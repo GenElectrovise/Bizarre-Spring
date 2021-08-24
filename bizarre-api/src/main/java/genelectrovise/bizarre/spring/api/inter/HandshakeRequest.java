@@ -12,17 +12,11 @@ public class HandshakeRequest {
 		this.port = port;
 	}
 
-	public String getType() {
-		return type;
-	}
+	public String getType() { return type; }
 
-	public String getHost() {
-		return host;
-	}
+	public String getHost() { return host; }
 
-	public int getPort() {
-		return port;
-	}
+	public int getPort() { return port; }
 
 	public String toString() {
 		return getClass().getSimpleName() + "{" + "type=" + type + " host=" + host + " port=" + port + "}";

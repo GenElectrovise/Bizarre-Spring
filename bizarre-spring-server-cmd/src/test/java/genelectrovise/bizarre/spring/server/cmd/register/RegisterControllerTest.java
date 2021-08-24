@@ -27,17 +27,13 @@ public class RegisterControllerTest {
 
 	private static final int ANY_PORT = 2020;
 
-	@InjectMocks
-	private RegisterController controller;
-	
-	@Mock
-	private ServiceRegister serviceRegister;
-	
-	@Mock
-	private KeyRegister keyPairGenerator;
-	
-	@Mock
-	private RegisterServiceRequest request;
+	@InjectMocks private RegisterController controller;
+
+	@Mock private ServiceRegister serviceRegister;
+
+	@Mock private KeyRegister keyPairGenerator;
+
+	@Mock private RegisterServiceRequest request;
 
 	@Test
 	public void whenAllOk_thenResponseReturned() {
@@ -84,6 +80,6 @@ public class RegisterControllerTest {
 		Assertions.assertThrows(InvalidRegistrationPacketException.class, () -> {
 			ResponseEntity<RegisterServiceResponse> response = controller.registerService(request);
 		});
-		
+
 	}
 }

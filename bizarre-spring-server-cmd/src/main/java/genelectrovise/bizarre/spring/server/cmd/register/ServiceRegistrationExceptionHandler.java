@@ -13,14 +13,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ServiceRegistrationExceptionHandler extends ResponseEntityExceptionHandler {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServiceRegistrationExceptionHandler.class);
 
 	@ExceptionHandler(InvalidRegistrationPacketException.class)
 	ResponseEntity<Object> handleInvalidServiceType(InvalidRegistrationPacketException e) {
-		
+
 		LOGGER.error("Handling " + InvalidRegistrationPacketException.class.getSimpleName() + " with " + e.getMessage());
-		
+
 		Map<Object, Object> body = new LinkedHashMap<>();
 
 		body.put(e.getKey(), e.getValue());

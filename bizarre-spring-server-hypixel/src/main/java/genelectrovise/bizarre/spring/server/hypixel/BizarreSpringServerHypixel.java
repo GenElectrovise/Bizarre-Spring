@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * The gateway for the
+ * 
  * @author adam_
  *
  */

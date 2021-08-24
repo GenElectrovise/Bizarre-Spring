@@ -12,31 +12,31 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
-import genelectrovise.bizarre.spring.api.inter.BizarreService;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
-import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegisterImpl;
+import genelectrovise.bizarre.spring.server.cmd.register.KeyRegister;
+import genelectrovise.bizarre.spring.server.cmd.register.RegisterController;
+import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegister;
+import genelectrovise.bizarre.spring.server.cmd.register.ServicesController;
 
 @Service
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class CmdMicroservice implements BizarreService.Parent {
+public class CmdMicroservice {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CmdMicroservice.class);
-	
-	@Value("server.host")
-	String host;
-	
-	@Value("server.port")
-	int port;
 
-	@Autowired
-	private ServiceRegisterImpl serviceRegister;
+	@Value("server.host") String host;
 
-	public CmdMicroservice(ServiceRegisterImpl serviceRegister) {
-		this.serviceRegister = serviceRegister;
-	}
+	@Value("server.port") int port;
 
-	public ServiceRegisterImpl getServiceRegister() {
-		return serviceRegister;
+	@Autowired protected RegisterController registerController;
+
+	@Autowired protected ServicesController servicesController;
+
+	@Autowired protected KeyRegister keyRegister;
+
+	@Autowired protected ServiceRegister serviceRegister;
+
+	public CmdMicroservice() {
 	}
 
 	@PostConstruct
@@ -45,14 +45,14 @@ public class CmdMicroservice implements BizarreService.Parent {
 		LOGGER.info("Gson has Type Adapter - " + new Gson().getAdapter(RegisterServiceRequest.class).toString() + " - registered for use with class - " + RegisterServiceRequest.class);
 	}
 
-	@Override
-	public String getHost() {
-		return host;
-	}
+	public String getHost() { return host; }
 
-	@Override
-	public int getPort() {
-		return port;
-	}
+	public int getPort() { return port; }
+
+	public RegisterController getRegisterController() { return registerController; }
+
+	public KeyRegister getKeyRegister() { return keyRegister; }
+
+	public ServiceRegister getServiceRegister() { return serviceRegister; }
 
 }

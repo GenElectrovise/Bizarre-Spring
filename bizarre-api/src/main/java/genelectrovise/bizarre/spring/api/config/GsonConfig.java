@@ -11,6 +11,6 @@ import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 
 @Configuration
 public class GsonConfig {
-	
+
 	public static final Logger LOGGER = LoggerFactory.getLogger(GsonConfig.class);
 }

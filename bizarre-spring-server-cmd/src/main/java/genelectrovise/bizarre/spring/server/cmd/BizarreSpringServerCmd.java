@@ -12,8 +12,8 @@ import genelectrovise.bizarre.spring.server.cmd.ui.CmdWindow;
 @SpringBootApplication
 public class BizarreSpringServerCmd {
 
-	//@Autowired
-	//CmdWindow window;
+	// @Autowired
+	// CmdWindow window;
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = new SpringApplicationBuilder(BizarreSpringServerCmd.class).headless(false).run(args);

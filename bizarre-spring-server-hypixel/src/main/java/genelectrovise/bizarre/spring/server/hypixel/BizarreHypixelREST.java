@@ -14,14 +14,12 @@ public class BizarreHypixelREST extends RouteBuilder {
 	/**
 	 * The root path for the API, i.e. localhost://path
 	 */
-	@Value("${bizarre.api.path}")
-	String camelRootContextPath;
+	@Value("${bizarre.api.path}") String camelRootContextPath;
 
 	/**
 	 * The port for the Camel servlet
 	 */
-	@Value("${bizarre.api.serverPort}")
-	String serverPort;
+	@Value("${bizarre.api.serverPort}") String serverPort;
 
 	@Override
 	public void configure() throws Exception {

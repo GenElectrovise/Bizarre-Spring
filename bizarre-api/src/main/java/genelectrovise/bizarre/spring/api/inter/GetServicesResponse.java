@@ -15,13 +15,9 @@ public class GetServicesResponse {
 		this.services = map;
 	}
 
-	public Map<String, ChildService> getServices() {
-		return services;
-	}
+	public Map<String, ChildService> getServices() { return services; }
 
-	public void setServices(Map<String, ChildService> services) {
-		this.services = services;
-	}
+	public void setServices(Map<String, ChildService> services) { this.services = services; }
 
 	@Override
 	public String toString() {

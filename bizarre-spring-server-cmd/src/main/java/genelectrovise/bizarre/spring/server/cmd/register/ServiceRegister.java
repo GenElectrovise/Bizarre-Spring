@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
+import com.google.common.collect.Maps;
+
 import genelectrovise.bizarre.spring.api.inter.BackendFor;
 import genelectrovise.bizarre.spring.api.inter.ChildService;
 import genelectrovise.bizarre.spring.api.inter.GetServicesResponse;
@@ -19,23 +21,26 @@ public class ServiceRegister {
 
 	Map<String, ChildService> services;
 
-	@Autowired
-	CmdMicroservice cmd;
+	@Autowired CmdMicroservice cmd;
+
+	@Autowired protected KeyRegister keyRegister;
+
+	@Autowired protected ServiceRegister serviceRegister;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServiceRegister.class);
+
+	public ServiceRegister() {
+		this.services = Maps.newHashMap();
+	}
 
 	public ServiceRegister(Map<String, ChildService> services) {
 		this.services = services;
 	}
 
-	public void setServices(Map<String, ChildService> services) {
-		this.services = services;
-	}
+	public void setServices(Map<String, ChildService> services) { this.services = services; }
 
 	@BackendFor("RegisterController.getServices()")
-	public Map<String, ChildService> getServices() {
-		return services;
-	}
+	public Map<String, ChildService> getServices() { return services; }
 
 	@BackendFor("RegisterController.getService()")
 	public GetServicesResponse getService(String name) {

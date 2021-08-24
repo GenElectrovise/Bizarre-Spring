@@ -12,16 +12,10 @@ public class ChildService {
 		this.name = name;
 	}
 
-	public String getHost() {
-		return host;
-	}
+	public String getHost() { return host; }
 
-	public int getPort() {
-		return port;
-	}
+	public int getPort() { return port; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
 }

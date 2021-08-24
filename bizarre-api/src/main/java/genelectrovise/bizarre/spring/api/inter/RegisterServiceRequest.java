@@ -1,6 +1,6 @@
 package genelectrovise.bizarre.spring.api.inter;
 
-public class RegisterServiceRequest   {
+public class RegisterServiceRequest {
 
 	String type;
 	String host;
@@ -12,17 +12,11 @@ public class RegisterServiceRequest   {
 		this.port = port;
 	}
 
-	public String getType() {
-		return type;
-	}
+	public String getType() { return type; }
 
-	public String getHost() {
-		return host;
-	}
+	public String getHost() { return host; }
 
-	public int getPort() {
-		return port;
-	}
+	public int getPort() { return port; }
 
 	public String toString() {
 		return getClass().getSimpleName() + "{" + "type=" + type + " host=" + host + " port=" + port + "}";

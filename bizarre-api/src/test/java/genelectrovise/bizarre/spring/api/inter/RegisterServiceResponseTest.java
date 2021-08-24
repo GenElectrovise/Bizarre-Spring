@@ -11,8 +11,9 @@ import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 public class RegisterServiceResponseTest {
 
 	private Gson gson = new GsonBuilder().create();
-	
-	// {"parent_child_key": "pc","child_parent_key": "cp","host": "local","port": 2020,"type": "type"}
+
+	// {"parent_child_key": "pc","child_parent_key": "cp","host": "local","port":
+	// 2020,"type": "type"}
 
 	@Test
 	public void checkRegisterServiceResponseAdapter_isNotNull() {
@@ -33,7 +34,7 @@ public class RegisterServiceResponseTest {
 		Assertions.assertEquals("{\"parent_child_key\": \"pc\",\"child_parent_key\": \"cp\",\"host\": \"local\",\"port\": 2020,\"type\": \"type\"}", json);
 	}
 
-	@Test 
+	@Test
 	public void whenHasRegisterServiceResponseJson_deserializesCorrectly() {
 		String json = "{\"parent_child_key\": \"pc\",\"child_parent_key\": \"cp\",\"host\": \"local\",\"port\": 2020,\"type\": \"type\"}";
 

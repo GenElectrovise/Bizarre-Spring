@@ -11,13 +11,9 @@ public class KeyPair {
 		this.childParentKey = childParentKey;
 	}
 
-	public String getParentChildKey() {
-		return parentChildKey;
-	}
+	public String getParentChildKey() { return parentChildKey; }
 
-	public String getChildParentKey() {
-		return childParentKey;
-	}
+	public String getChildParentKey() { return childParentKey; }
 
 	@Override
 	public String toString() {
