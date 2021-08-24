@@ -4,6 +4,8 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -12,21 +14,28 @@ import com.google.gson.Gson;
 
 import genelectrovise.bizarre.spring.api.inter.BizarreService;
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
-import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegister;
+import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegisterImpl;
 
 @Service
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class CmdMicroservice implements BizarreService {
+public class CmdMicroservice implements BizarreService.Parent {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CmdMicroservice.class);
+	
+	@Value("server.host")
+	String host;
+	
+	@Value("server.port")
+	int port;
 
-	private ServiceRegister serviceRegister;
+	@Autowired
+	private ServiceRegisterImpl serviceRegister;
 
-	public CmdMicroservice(ServiceRegister serviceRegister) {
+	public CmdMicroservice(ServiceRegisterImpl serviceRegister) {
 		this.serviceRegister = serviceRegister;
 	}
 
-	public ServiceRegister getServiceRegister() {
+	public ServiceRegisterImpl getServiceRegister() {
 		return serviceRegister;
 	}
 
@@ -38,12 +47,12 @@ public class CmdMicroservice implements BizarreService {
 
 	@Override
 	public String getHost() {
-		return "";
+		return host;
 	}
 
 	@Override
 	public int getPort() {
-		return 0;
+		return port;
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.GsonBuilder;
 
 import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
 
 @Service
 public class GateMicroservice {
@@ -31,7 +32,7 @@ public class GateMicroservice {
 		HttpHeaders headers = new HttpHeaders();
 
 		// Configure content
-		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequest.Concrete("gate", "localhost", 8082);
+		RegisterServiceRequest registerServiceRequest = new RegisterServiceRequest("gate", "localhost", 8082);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 		String json = new GsonBuilder().create().toJson(registerServiceRequest);

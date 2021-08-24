@@ -18,7 +18,7 @@ public class RegisterServiceRequestTest {
 
 	private Gson gson = new GsonBuilder().create();
 
-	private RegisterServiceRequest.Concrete concrete = new RegisterServiceRequest.Concrete(ANY_TYPE, ANY_HOST, ANY_PORT);
+	private RegisterServiceRequest concrete = new RegisterServiceRequest(ANY_TYPE, ANY_HOST, ANY_PORT);
 
 	private RegisterServiceRequest.Adapter adapter = new RegisterServiceRequest.Adapter();
 
@@ -42,7 +42,7 @@ public class RegisterServiceRequestTest {
 
 	@Test
 	public void whenAllOk_toStringIsCorrect() {
-		String str = RegisterServiceRequest.Concrete.class.getSimpleName() + "{" + "type=" + ANY_TYPE + " host=" + ANY_HOST + " port=" + ANY_PORT + "}";
+		String str = RegisterServiceRequest.class.getSimpleName() + "{" + "type=" + ANY_TYPE + " host=" + ANY_HOST + " port=" + ANY_PORT + "}";
 		Assertions.assertEquals(str, concrete.toString());
 	}
 
@@ -73,7 +73,7 @@ public class RegisterServiceRequestTest {
 
 	@Test
 	public void whenHasRegisterServiceRequestPOJO_serialisesCorrectly() {
-		RegisterServiceRequest request = new RegisterServiceRequest.Concrete("gate", "localhost", 2020);
+		RegisterServiceRequest request = new RegisterServiceRequest("gate", "localhost", 2020);
 
 		String json = gson.toJson(request);
 
@@ -84,7 +84,7 @@ public class RegisterServiceRequestTest {
 	public void whenHasRegisterServiceRequestJson_deserializesCorrectly() {
 		String json = "{\"type\":\"gate\",\"host\":\"localhost\",\"port\":2020}";
 
-		RegisterServiceRequest request = gson.fromJson(json, RegisterServiceRequest.Concrete.class);
+		RegisterServiceRequest request = gson.fromJson(json, RegisterServiceRequest.class);
 
 		Assertions.assertEquals("gate", request.getType());
 		Assertions.assertEquals("localhost", request.getHost());

@@ -11,6 +11,8 @@ import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
 public class RegisterServiceResponseTest {
 
 	private Gson gson = new GsonBuilder().create();
+	
+	// {"parent_child_key": "pc","child_parent_key": "cp","host": "local","port": 2020,"type": "type"}
 
 	@Test
 	public void checkRegisterServiceResponseAdapter_isNotNull() {
@@ -24,20 +26,24 @@ public class RegisterServiceResponseTest {
 
 	@Test
 	public void whenHasRegisterServiceResponsePOJO_serialisesCorrectly() {
-		RegisterServiceResponse request = new RegisterServiceResponse.Concrete(42);
+		RegisterServiceResponse request = new RegisterServiceResponse("pc", "cp", "local", 2020, "type");
 
 		String json = gson.toJson(request);
 
-		Assertions.assertEquals("{\"ok\":42}", json);
+		Assertions.assertEquals("{\"parent_child_key\": \"pc\",\"child_parent_key\": \"cp\",\"host\": \"local\",\"port\": 2020,\"type\": \"type\"}", json);
 	}
 
 	@Test 
 	public void whenHasRegisterServiceResponseJson_deserializesCorrectly() {
-		String json = "{\"ok\":42}";
+		String json = "{\"parent_child_key\": \"pc\",\"child_parent_key\": \"cp\",\"host\": \"local\",\"port\": 2020,\"type\": \"type\"}";
 
-		RegisterServiceResponse request = gson.fromJson(json, RegisterServiceResponse.Concrete.class);
+		RegisterServiceResponse request = gson.fromJson(json, RegisterServiceResponse.class);
 
-		Assertions.assertEquals(42, request.getOk());
+		Assertions.assertEquals("pc", request.getParentChildKey());
+		Assertions.assertEquals("cp", request.getChildParentKey());
+		Assertions.assertEquals("local", request.getHost());
+		Assertions.assertEquals(2020, request.getPort());
+		Assertions.assertEquals("type", request.getType());
 	}
 
 }
