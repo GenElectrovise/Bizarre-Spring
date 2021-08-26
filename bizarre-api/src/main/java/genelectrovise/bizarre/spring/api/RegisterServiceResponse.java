@@ -1,4 +1,4 @@
-package genelectrovise.bizarre.spring.api.inter;
+package genelectrovise.bizarre.spring.api;
 
 public class RegisterServiceResponse {
 
@@ -26,8 +26,6 @@ public class RegisterServiceResponse {
 
 	public String getType() { return type; }
 
-	public String toString() {
-		return getClass().getSimpleName() + "{" + "host=" + host + " port=" + port + " type=" + type + "}";
-	}
+	public String toString() { return getClass().getSimpleName() + "{" + "parentChildKey=" + parentChildKey + " childParentKey=" + childParentKey + " host=" + host + " port=" + port + " type=" + type + "}"; }
 
 }

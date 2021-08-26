@@ -12,7 +12,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BizarreSpringServerNnet {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BizarreSpringServerNnet.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(BizarreSpringServerNnet.class, args); }
 }

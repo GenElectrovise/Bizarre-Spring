@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.gson.GsonBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
+import genelectrovise.bizarre.spring.api.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.api.RegisterServiceResponse;
 
 @Configuration
 public class GsonConfig {

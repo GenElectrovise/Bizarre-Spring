@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.api.RegisterServiceRequest;
 import genelectrovise.bizarre.spring.server.cmd.register.KeyRegister;
 import genelectrovise.bizarre.spring.server.cmd.register.RegisterController;
 import genelectrovise.bizarre.spring.server.cmd.register.ServiceRegister;
@@ -26,7 +26,7 @@ public class CmdMicroservice {
 
 	@Value("server.host") String host;
 
-	@Value("server.port") int port;
+	@Value("server.port") String port;
 
 	@Autowired protected RegisterController registerController;
 
@@ -36,8 +36,7 @@ public class CmdMicroservice {
 
 	@Autowired protected ServiceRegister serviceRegister;
 
-	public CmdMicroservice() {
-	}
+	public CmdMicroservice() {}
 
 	@PostConstruct
 	public void postInit() {
@@ -47,7 +46,7 @@ public class CmdMicroservice {
 
 	public String getHost() { return host; }
 
-	public int getPort() { return port; }
+	public String getPort() { return port; }
 
 	public RegisterController getRegisterController() { return registerController; }
 

@@ -12,7 +12,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BizarreSpringServerHypixel {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BizarreSpringServerHypixel.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(BizarreSpringServerHypixel.class, args); }
 }

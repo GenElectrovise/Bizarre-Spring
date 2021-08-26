@@ -1,4 +1,4 @@
-package genelectrovise.bizarre.spring.api.inter;
+package genelectrovise.bizarre.spring.api;
 
 public class KeyPair {
 
@@ -16,7 +16,5 @@ public class KeyPair {
 	public String getChildParentKey() { return childParentKey; }
 
 	@Override
-	public String toString() {
-		return "KeyPair{" + "parentChildKey=" + parentChildKey + " childParentKey=" + childParentKey + "}";
-	}
+	public String toString() { return "KeyPair{" + "parentChildKey=" + parentChildKey + " childParentKey=" + childParentKey + "}"; }
 }

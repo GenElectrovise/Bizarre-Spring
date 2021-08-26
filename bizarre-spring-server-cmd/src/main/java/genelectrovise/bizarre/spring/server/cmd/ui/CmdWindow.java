@@ -4,11 +4,11 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import org.springframework.stereotype.Component;
+
 public class CmdWindow extends JFrame {
 
-	public CmdWindow() {
-		initWindow();
-	}
+	public CmdWindow() { initWindow(); }
 
 	protected void initWindow() {
 		setVisible(true);

@@ -6,9 +6,7 @@ public class InvalidRegistrationPacketException extends RuntimeException {
 
 	private Object key, value;
 
-	public InvalidRegistrationPacketException(String message, String key, Object value) {
-		super(message);
-	}
+	public InvalidRegistrationPacketException(String message, String key, Object value) { super(message); }
 
 	public Object getKey() { return key; }
 

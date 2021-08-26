@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceRequest;
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
+import genelectrovise.bizarre.spring.api.RegisterServiceRequest;
+import genelectrovise.bizarre.spring.api.RegisterServiceResponse;
 
 /**
  * The REST Controller for the registration API
@@ -25,21 +25,18 @@ public class RegisterController {
 
 	@Autowired private ServiceRegister serviceRegister;
 
-	@Autowired private KeyRegister keyRegister;
+	public RegisterController() {}
 
-	public RegisterController() {
-	}
-
-	@ResponseStatus(code = HttpStatus.ACCEPTED, reason = "Success. Service registered. Handshake following.")
 	@PostMapping("/register")
+	@ResponseStatus(code = HttpStatus.ACCEPTED, reason = "Success. Service registered. Handshake following.")
 	RegisterServiceResponse registerService(@RequestBody RegisterServiceRequest request) {
-		RegisterServiceResponse response = serviceRegister.registerService(this, request);
-		serviceRegister.doHandshake(request.getType()); // Asynchronous
+		LOGGER.info("Recieved " + RegisterServiceRequest.class.getSimpleName() + " - " + request.toString());
+
+		RegisterServiceResponse response = getServiceRegister().registerService(request);
+		getServiceRegister().doHandshake(request.getType(), 1000L); // Asynchronous
 		return response;
 	}
 
-	public void setKeyPairGenerator(KeyRegister keyPairGenerator) { this.keyRegister = keyPairGenerator; }
-
-	public KeyRegister getKeyPairGenerator() { return keyRegister; }
+	public ServiceRegister getServiceRegister() { return serviceRegister; }
 
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import genelectrovise.bizarre.spring.api.inter.RegisterServiceResponse;
+import genelectrovise.bizarre.spring.api.RegisterServiceResponse;
 
 public class RegisterServiceResponseTest {
 
@@ -16,14 +16,10 @@ public class RegisterServiceResponseTest {
 	// 2020,"type": "type"}
 
 	@Test
-	public void checkRegisterServiceResponseAdapter_isNotNull() {
-		Assertions.assertNotNull(gson.getAdapter(RegisterServiceResponse.class));
-	}
+	public void checkRegisterServiceResponseAdapter_isNotNull() { Assertions.assertNotNull(gson.getAdapter(RegisterServiceResponse.class)); }
 
 	@Test
-	public void checkRegisterServiceResponseAdapter_doesNotThrow() {
-		Assertions.assertDoesNotThrow(() -> gson.getAdapter(RegisterServiceResponse.class));
-	}
+	public void checkRegisterServiceResponseAdapter_doesNotThrow() { Assertions.assertDoesNotThrow(() -> gson.getAdapter(RegisterServiceResponse.class)); }
 
 	@Test
 	public void whenHasRegisterServiceResponsePOJO_serialisesCorrectly() {

@@ -12,7 +12,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BizarreSpringServerGate {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BizarreSpringServerGate.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(BizarreSpringServerGate.class, args); }
 }

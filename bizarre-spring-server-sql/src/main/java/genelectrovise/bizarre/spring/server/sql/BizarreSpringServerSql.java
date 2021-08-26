@@ -12,7 +12,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BizarreSpringServerSql {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BizarreSpringServerSql.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(BizarreSpringServerSql.class, args); }
 }

@@ -2,11 +2,11 @@ package genelectrovise.bizarre.spring.api.inter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+
+import genelectrovise.bizarre.spring.api.RegisterServiceRequest;
 
 public class RegisterServiceRequestTest {
 
@@ -20,26 +20,6 @@ public class RegisterServiceRequestTest {
 
 	private RegisterServiceRequest concrete = new RegisterServiceRequest(ANY_TYPE, ANY_HOST, ANY_PORT);
 
-	private RegisterServiceRequest.Adapter adapter = new RegisterServiceRequest.Adapter();
-
-	/*
-	 * @Test public void whenHasValidJsonObject_readsCorrectly() {
-	 * 
-	 * JsonObject object = Mockito.mock(JsonObject.class);
-	 * Mockito.when(object.get(RegisterServiceRequest.TYPE_KEY).getAsString()).
-	 * thenReturn(ANY_TYPE);
-	 * Mockito.when(object.get(RegisterServiceRequest.HOST_KEY).getAsString()).
-	 * thenReturn(ANY_HOST);
-	 * Mockito.when(object.get(RegisterServiceRequest.PORT_KEY).getAsInt()).
-	 * thenReturn(ANY_PORT);
-	 * 
-	 * RegisterServiceRequest request = adapter.readJsonObject(object);
-	 * 
-	 * Assertions.assertEquals(request.getType(), ANY_TYPE);
-	 * Assertions.assertEquals(request.getHost(), ANY_HOST);
-	 * Assertions.assertEquals(request.getPort(), ANY_PORT); }
-	 */
-
 	@Test
 	public void whenAllOk_toStringIsCorrect() {
 		String str = RegisterServiceRequest.class.getSimpleName() + "{" + "type=" + ANY_TYPE + " host=" + ANY_HOST + " port=" + ANY_PORT + "}";
@@ -47,29 +27,19 @@ public class RegisterServiceRequestTest {
 	}
 
 	@Test
-	public void whenTypeIsNotNull_returnsNotNull() {
-		Assertions.assertEquals(ANY_TYPE, concrete.getType());
-	}
+	public void whenTypeIsNotNull_returnsNotNull() { Assertions.assertEquals(ANY_TYPE, concrete.getType()); }
 
 	@Test
-	public void whenHostIsNotNull_returnsNotNull() {
-		Assertions.assertEquals(ANY_HOST, concrete.getHost());
-	}
+	public void whenHostIsNotNull_returnsNotNull() { Assertions.assertEquals(ANY_HOST, concrete.getHost()); }
 
 	@Test
-	public void whenPortIsNotNull_returnsNotNull() {
-		Assertions.assertEquals(ANY_PORT, concrete.getPort());
-	}
+	public void whenPortIsNotNull_returnsNotNull() { Assertions.assertEquals(ANY_PORT, concrete.getPort()); }
 
 	@Test
-	public void checkRegisterServiceRequestAdapter_isNotNull() {
-		Assertions.assertNotNull(gson.getAdapter(RegisterServiceRequest.class));
-	}
+	public void checkRegisterServiceRequestAdapter_isNotNull() { Assertions.assertNotNull(gson.getAdapter(RegisterServiceRequest.class)); }
 
 	@Test
-	public void checkRegisterServiceRequestAdapter_doesNotThrow() {
-		Assertions.assertDoesNotThrow(() -> gson.getAdapter(RegisterServiceRequest.class));
-	}
+	public void checkRegisterServiceRequestAdapter_doesNotThrow() { Assertions.assertDoesNotThrow(() -> gson.getAdapter(RegisterServiceRequest.class)); }
 
 	@Test
 	public void whenHasRegisterServiceRequestPOJO_serialisesCorrectly() {

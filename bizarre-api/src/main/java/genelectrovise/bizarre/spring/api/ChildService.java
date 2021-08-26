@@ -1,4 +1,4 @@
-package genelectrovise.bizarre.spring.api.inter;
+package genelectrovise.bizarre.spring.api;
 
 public class ChildService {
 
@@ -18,4 +18,5 @@ public class ChildService {
 
 	public String getName() { return name; }
 
+	public String getURL() { return "http://" + getHost() + ":" + getPort(); }
 }
